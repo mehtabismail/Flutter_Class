@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learning1/Screens/form_submission.dart';
 import 'package:learning1/Screens/home_screen.dart';
+import 'package:learning1/Screens/productListView.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -49,6 +50,20 @@ class MyDrawer extends StatelessWidget {
             ),
             onTap: () => Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => FormSubmiission())),
+          ),
+          ListTile(
+            leading: Icon(
+              CupertinoIcons.list_bullet,
+              color: Colors.deepPurple,
+            ),
+            title: Text(
+              'List Views',
+              textScaleFactor: 1.3,
+              style: TextStyle(
+                  color: Colors.deepPurple, fontWeight: FontWeight.bold),
+            ),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProductList())),
           )
         ],
       ),

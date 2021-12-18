@@ -13,13 +13,19 @@ class _FormSubmiissionState extends State<FormSubmiission> {
   final _formKey = GlobalKey<FormState>();
 
   void setStringInPreferences() async {
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // await prefs.setString('first_name', fName).then((value) => print(value));
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('first_name', fName).then((value) => print(value));
+    await prefs.setString('last_name', lName).then((value) => print(value));
     print(fName);
+    print(lName);
   }
 
   @override
   String fName = "";
+  String lName = '';
+  String e_mail = '';
+  String password = '';
+  String phone = '';
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -50,22 +56,22 @@ class _FormSubmiissionState extends State<FormSubmiission> {
                     });
                   },
                 ),
-                // TextFormField(
-                //   decoration: const InputDecoration(
-                //     hintText: 'Enter your Last Name',
-                //     labelText: 'Last Name',
-                //   ),
-                //   validator: (value) {
-                //     if (value!.isEmpty) {
-                //       return 'Empty Last Name!';
-                //     }
-                //   },
-                //   onFieldSubmitted: (value) {
-                //     setState(() {
-                //       lName = value;
-                //     });
-                //   },
-                // ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Enter your Last Name',
+                    labelText: 'Last Name',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Empty Last Name!';
+                    }
+                  },
+                  onFieldSubmitted: (value) {
+                    setState(() {
+                      lName = value;
+                    });
+                  },
+                ),
                 // TextFormField(
                 //   // The validator receives the text that the user has entered.
                 //   decoration: InputDecoration(
@@ -73,7 +79,7 @@ class _FormSubmiissionState extends State<FormSubmiission> {
                 //   keyboardType: TextInputType.emailAddress,
                 //   onFieldSubmitted: (value) {
                 //     setState(() {
-                //       email = value;
+                //       e_mail = value;
                 //     });
                 //   },
                 //   validator: (value) {
@@ -163,14 +169,16 @@ class _FormSubmittedState extends State<FormSubmitted> {
   void getStringFromPreferrences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String shared = prefs.getString("first_name")!;
+    String shared2 = prefs.getString("last_name")!;
     setState(() {
       name = shared;
+      lname = shared2;
     });
   }
 
   @override
   String name = '';
-
+  String lname = '';
   void initState() {
     super.initState();
     getStringFromPreferrences();
@@ -181,14 +189,23 @@ class _FormSubmittedState extends State<FormSubmitted> {
       appBar: AppBar(
         title: Text("Form Data"),
       ),
-      body: Center(
-        child: Text(
-          'First Name : $name',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+      body: Column(
+        children: [
+          Text(
+            'First Name : $name',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
+          Text(
+            'last Name : $lname',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }

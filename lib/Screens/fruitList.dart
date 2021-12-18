@@ -53,7 +53,7 @@ class _FruitListState extends State<FruitList> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('List'),
+        title: Text('Fruit List'),
       ),
       body: Container(
         child: Center(
@@ -67,38 +67,67 @@ class _FruitListState extends State<FruitList> {
                 ),
                 margin: const EdgeInsets.all(10),
                 color: Colors.deepOrangeAccent.shade100,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: ListTile(
-                    leading: Container(
-                      width: 80,
-                      height: 100,
-                      child: Image(
-                        image: AssetImage(images[index]),
+                child: GestureDetector(
+                  onHorizontalDragEnd: (details) {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Gestures()));
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: ListTile(
+                      leading: Container(
+                        width: 80,
+                        height: 100,
+                        child: Image(
+                          image: AssetImage(images[index]),
+                        ),
+                        // decoration: BoxDecoration(color: Colors.purple),
                       ),
-                      // decoration: BoxDecoration(color: Colors.purple),
-                    ),
-                    title: Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      child: Center(
-                        child: Text(
-                          titles[index],
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                      title: Container(
+                        margin: EdgeInsets.symmetric(vertical: 5),
+                        child: Center(
+                          child: Text(
+                            titles[index],
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
+                      subtitle: Text(
+                        subTitles[index],
+                      ),
+                      // trailing: Image(
+                      //   image: AssetImage('assets/images/apple2.jpg'),
+                      // ),
                     ),
-                    subtitle: Text(
-                      subTitles[index],
-                    ),
-                    // trailing: Image(
-                    //   image: AssetImage('assets/images/apple2.jpg'),
-                    // ),
                   ),
                 ),
               );
             },
           ),
         ),
+      ),
+    );
+  }
+}
+
+class Gestures extends StatefulWidget {
+  @override
+  _GesturesState createState() => _GesturesState();
+}
+
+class _GesturesState extends State<Gestures> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Gestures Performed"),
+      ),
+      body: Column(
+        children: const [
+          Image(image: AssetImage('assets/images/apple2.jpg')),
+          Text(
+              'An apple is an edible fruit produced by an apple tree & cultivated worldwide very delecius in tase ')
+        ],
       ),
     );
   }

@@ -52,6 +52,9 @@ class _VehicleListState extends State<VehicleList> {
       Icons.add_call
     ];
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Vehicle List'),
+      ),
       body: Container(
         child: Center(
           child: ListView.builder(

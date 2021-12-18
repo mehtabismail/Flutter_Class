@@ -17,14 +17,14 @@ void main() {
     debugShowCheckedModeBanner: false,
 
     //  Routes
-    initialRoute: '/Product_List',
+    initialRoute: '/HomeScreen',
     routes: {
-      // '/': (context) => LoginScreen(),
-      // '/LoginScreen': (context) => LoginScreen(),
-      // '/HomeScreen': (context) => HomeScreen(),
-      // '/SignUp': (context) => SignUpScreen(),
-      // '/Form_Submisson': (context) => FormSubmiission(),
-      // '/Form_Submitted': (context) => FormSubmitted(),
+      '/': (context) => LoginScreen(),
+      '/LoginScreen': (context) => LoginScreen(),
+      '/HomeScreen': (context) => HomeScreen(),
+      '/SignUp': (context) => SignUpScreen(),
+      '/Form_Submisson': (context) => FormSubmiission(),
+      '/Form_Submitted': (context) => FormSubmitted(),
       '/Product_List': (context) => ProductList(),
     },
   ));
