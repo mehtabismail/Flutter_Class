@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors, unused_import
+//ignore_for_file: prefer_const_constructors, unused_import, unnecessary_question_mark
 
 import 'package:flutter/material.dart';
+import 'package:learning1/Screens/form2.dart';
 import 'package:learning1/Screens/form_submission.dart';
 import './Screens/home_screen.dart';
 import './Screens/login_screen.dart';
@@ -17,7 +18,7 @@ void main() {
     debugShowCheckedModeBanner: false,
 
     //  Routes
-    initialRoute: '/HomeScreen',
+    initialRoute: '/',
     routes: {
       '/': (context) => LoginScreen(),
       '/LoginScreen': (context) => LoginScreen(),
