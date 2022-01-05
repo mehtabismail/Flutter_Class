@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:learning1/Screens/home_screen.dart';
 import 'package:learning1/model/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -52,6 +53,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         .set(userModel.toMap());
     // SHOWING TOAST MESSAGE
     Fluttertoast.showToast(msg: "Account Created Successfully");
+
+    //  SAVING LOGIN SESSION
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("email", emailController.text);
 
     // NAVIGATE TO HOME SCREEN
     Navigator.pushAndRemoveUntil(
@@ -142,12 +147,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               secondNameController.text = value!;
                             },
                             textInputAction: TextInputAction.next,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Second Name cannot be empty";
-                              }
-                              return null;
-                            },
                             decoration: InputDecoration(
                                 hintText: "Enter Second Name",
                                 labelText: "Second Name"),
@@ -179,14 +178,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           TextFormField(
                             autofocus: false,
                             controller: passwordController,
-                            onSaved: (value) {
-                              passwordController.text = value!;
-                            },
                             textInputAction: TextInputAction.next,
                             obscureText: true,
                             decoration: InputDecoration(
                                 hintText: "Enter Password",
                                 labelText: "Password"),
+                            onSaved: (value) {
+                              passwordController.text = value!;
+                            },
                             validator: (value) {
                               RegExp regex = new RegExp(r'^.{6,}$');
                               if (value!.isEmpty) {

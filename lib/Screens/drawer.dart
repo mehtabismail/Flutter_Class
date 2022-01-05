@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:learning1/Screens/form_submission.dart';
 import 'package:learning1/Screens/home_screen.dart';
 import 'package:learning1/Screens/productListView.dart';
+import 'package:learning1/Screens/uploadData.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -64,6 +65,20 @@ class MyDrawer extends StatelessWidget {
             ),
             onTap: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ProductList())),
+          ),
+          ListTile(
+            leading: Icon(
+              CupertinoIcons.cloud_upload,
+              color: Colors.deepPurple,
+            ),
+            title: Text(
+              'Upload Data',
+              textScaleFactor: 1.3,
+              style: TextStyle(
+                  color: Colors.deepPurple, fontWeight: FontWeight.bold),
+            ),
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => UploadData())),
           )
         ],
       ),

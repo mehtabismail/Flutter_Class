@@ -1,11 +1,47 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, unnecessary_this
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:learning1/Screens/drawer.dart';
-import 'package:learning1/Services/auth_services.dart';
+import 'package:learning1/Screens/login_screen.dart';
+import 'package:learning1/model/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: use_key_in_widget_constructors
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
+  void logOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.remove('email');
+    Fluttertoast.showToast(
+        msg: "${loggedInUser.firstName} LogOut Successfully");
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +70,19 @@ class HomeScreen extends StatelessWidget {
                     child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("User uid: "),
-                    Text("${AuthService().currentUser?.uid}")
+                    Text("User : "),
+                    Text(
+                        "${loggedInUser.firstName} ${loggedInUser.secondName}"),
                   ],
-                ))
+                )),
+                SizedBox(
+                  height: 25,
+                ),
+                ActionChip(
+                    label: Text("Log Out"),
+                    onPressed: () {
+                      logOut(context);
+                    })
               ],
             ),
           ),

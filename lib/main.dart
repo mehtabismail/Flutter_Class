@@ -1,10 +1,14 @@
 //ignore_for_file: prefer_const_constructors, unused_import, unnecessary_question_mark
+import 'dart:js';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:learning1/Screens/form2.dart';
 import 'package:learning1/Screens/form_submission.dart';
+import 'package:learning1/Screens/getData.dart';
 import 'package:learning1/Screens/signUp_screen.dart';
+import 'package:learning1/Screens/splash.dart';
+import 'package:learning1/Screens/uploadData.dart';
 import 'package:learning1/Services/auth_services.dart';
 import './Screens/home_screen.dart';
 import './Screens/login_screen.dart';
@@ -27,15 +31,18 @@ void main() async {
     debugShowCheckedModeBanner: false,
 
     //  Routes
-    initialRoute: '/LoginScreen',
+    initialRoute: '/Splash',
     routes: {
-      '/': (context) => LoginScreen(),
+      '/': (context) => Splash(),
+      '/Splash': (context) => Splash(),
       '/LoginScreen': (context) => LoginScreen(),
-      // '/HomeScreen': (context) => HomeScreen(),
+      '/HomeScreen': (context) => HomeScreen(),
       '/SignUp': (context) => SignUpScreen(),
-      // '/Form_Submisson': (context) => FormSubmiission(),
-      // '/Form_Submitted': (context) => FormSubmitted(),
-      // '/Product_List': (context) => ProductList(),
+      // '/UploadData': (context) => UploadData(),
+      '/GetData': (context) => GetData(),
+      '/Form_Submisson': (context) => FormSubmiission(),
+      '/Form_Submitted': (context) => FormSubmitted(),
+      '/Product_List': (context) => ProductList(),
     },
   ));
 }
