@@ -1,5 +1,4 @@
 //ignore_for_file: prefer_const_constructors, unused_import, unnecessary_question_mark
-import 'dart:js';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
