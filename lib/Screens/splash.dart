@@ -1,3 +1,7 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:learning1/Screens/home_screen.dart';
 import 'package:learning1/Screens/login_screen.dart';
@@ -13,13 +17,23 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   void initState() {
-    getValidationData().whenComplete(() async => {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      (finalEmail == '' ? LoginScreen() : HomeScreen())))
-        });
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      print("WidgetsBinding");
+      Future.delayed(Duration(seconds: 5), () {
+        print('yo hey');
+        getValidationData().whenComplete(() async => {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          (finalEmail == '' ? LoginScreen() : HomeScreen())))
+            });
+      });
+      // Timer.periodic(Duration(seconds: 5), (timer) {
+      //   // do something or call a function
+
+      // });
+    });
     super.initState();
   }
 
@@ -34,6 +48,44 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+        body: Container(
+      color: Colors.deepPurple,
+      alignment: Alignment.center,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 50,
+            ),
+            Container(
+              // height: double.infinity,
+              alignment: Alignment.bottomCenter,
+              child: Image.asset(
+                "assets/images/splash.png",
+                fit: BoxFit.contain,
+                width: 300,
+              ),
+            ),
+            Container(
+                // height: double.infinity,
+                // alignment: Alignment.bottomCenter,
+                child: Text(
+              "Health With Fruits",
+              style: TextStyle(
+                  color: Colors.amber,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20),
+            )),
+            SizedBox(
+              height: 50,
+            ),
+            // CircularProgressIndicator()
+          ],
+        ),
+      ),
+    ));
   }
 }

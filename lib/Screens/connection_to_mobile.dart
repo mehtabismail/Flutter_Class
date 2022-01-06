@@ -12,3 +12,6 @@
 //       });
       
 //   }
+
+
+// width: MediaQuery.of(context).size.width,
