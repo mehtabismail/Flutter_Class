@@ -19,8 +19,8 @@ class UploadData extends StatefulWidget {
 
 class _UploadDataState extends State<UploadData> {
   final Storage storage = new Storage();
-  var path = null;
-  var fileName = null;
+  var path;
+  var fileName;
 
   Future pickImage(BuildContext context) async {
     // SELLECTING FILE
