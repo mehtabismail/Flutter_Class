@@ -29,10 +29,6 @@ class _SplashState extends State<Splash> {
                           (finalEmail == '' ? LoginScreen() : HomeScreen())))
             });
       });
-      // Timer.periodic(Duration(seconds: 5), (timer) {
-      //   // do something or call a function
-
-      // });
     });
     super.initState();
   }
