@@ -46,46 +46,44 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Home Screen'),
       ),
-      body: Center(
-        child: Container(
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 200,
-                ),
-                Text(
-                  'WELCOME to Dashboard',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                Center(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("User : "),
-                    Text(
-                        "${loggedInUser.firstName} ${loggedInUser.secondName}"),
-                  ],
-                )),
-                SizedBox(
-                  height: 25,
-                ),
-                ActionChip(
-                    label: Text("Log Out"),
-                    onPressed: () {
-                      logOut(context);
-                    })
-              ],
+      body: Container(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200,
             ),
-          ),
+            Text(
+              'WELCOME TO!',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepPurple),
+            ),
+            Text(
+              'Health With Fruits',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepPurple),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Center(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("User : admin"),
+                Text("${loggedInUser.firstName} ${loggedInUser.secondName}"),
+              ],
+            )),
+            SizedBox(
+              height: 25,
+            ),
+          ],
         ),
       ),
       drawer: MyDrawer(),

@@ -19,7 +19,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       print("WidgetsBinding");
-      Future.delayed(Duration(seconds: 5), () {
+      Future.delayed(Duration(seconds: 10), () {
         print('yo hey');
         getValidationData().whenComplete(() async => {
               Navigator.pushReplacement(

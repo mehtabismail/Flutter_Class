@@ -20,43 +20,50 @@ class _FruitListState extends State<FruitList> {
         title: Text('Fruit List'),
       ),
       body: Container(
-        child: Center(
-          child: StreamBuilder(
-            stream:
-                FirebaseFirestore.instance.collection('FruitsData').snapshots(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+        child: StreamBuilder(
+          stream:
+              FirebaseFirestore.instance.collection('FruitsData').snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-              return ListView(
-                children: snapshot.data!.docs.map((document) {
-                  return GestureDetector(
-                    onTap: () async {
-                      SharedPreferences sharedPreferences =
-                          await SharedPreferences.getInstance();
-                      await sharedPreferences.setString(
-                          "title", document['title']);
-                      await sharedPreferences.setString(
-                          "description", document['description']);
-                      await sharedPreferences.setString(
-                          "image", document['image']);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Gesture()));
-                    },
-                    child: Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      margin: const EdgeInsets.all(10),
-                      color: Colors.deepOrangeAccent.shade100,
-                      child: Row(
-                        children: [
-                          FutureBuilder(
+            return ListView(
+              children: snapshot.data!.docs.map((document) {
+                return GestureDetector(
+                  onTap: () async {
+                    SharedPreferences sharedPreferences =
+                        await SharedPreferences.getInstance();
+                    await sharedPreferences.setString(
+                        "title", document['title']);
+                    await sharedPreferences.setString(
+                        "description", document['description']);
+                    await sharedPreferences.setString(
+                        "image", document['image']);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FruitData(
+                                  title: document["title"],
+                                  image: document["image"],
+                                  description: document["description"],
+                                )));
+                  },
+                  child: Card(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: const EdgeInsets.all(10),
+                    color: Colors.deepOrangeAccent.shade100,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.30,
+                          child: FutureBuilder(
                               future: storage.downloadURL(document['image']),
                               builder: (BuildContext context,
                                   AsyncSnapshot<String> snapshot) {
@@ -82,75 +89,153 @@ class _FruitListState extends State<FruitList> {
                                 }
                                 return Container();
                               }),
-                          Column(
-                            children: [
-                              Container(
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Center(
-                                      child: Text(
-                                    document['title'],
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  )),
-                                ),
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.60,
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Center(
+                                    child: Text(
+                                  document['title'],
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                )),
                               ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Center(
-                                      child: Text(
-                                    document['description'],
-                                    style: TextStyle(
-                                        color: Colors.deepOrangeAccent),
-                                  )),
-                                ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.60,
+                              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Center(
+                                    child: Text(
+                                  document['description'],
+                                  style:
+                                      TextStyle(color: Colors.deepOrangeAccent),
+                                )),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  );
-                }).toList(),
-              );
-            },
-          ),
+                  ),
+                );
+              }).toList(),
+            );
+          },
         ),
       ),
     );
   }
 }
 
-class Gesture extends StatefulWidget {
-  @override
-  State<Gesture> createState() => _GestureState();
-}
+// class Gesture extends StatefulWidget {
+//   @override
+//   State<Gesture> createState() => _GestureState();
+// }
 
-class _GestureState extends State<Gesture> {
-  var title, image, description;
-  @override
-  fun() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() async {
-      title = await sharedPreferences.getString('title');
-      description = await sharedPreferences.getString('description');
-      image = await sharedPreferences.getString('image');
-    });
-  }
+// class _GestureState extends State<Gesture> {
+//   var title, image, description;
+//   @override
+//   fun() async {
+//     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+//     setState(() async {
+//       title = await sharedPreferences.getString('title');
+//       description = await sharedPreferences.getString('description');
+//       image = await sharedPreferences.getString('image');
+//     });
+//   }
 
-  void initState() {
-    fun();
-    super.initState();
-  }
+//   void initState() {
+//     fun();
+//     super.initState();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         centerTitle: true,
+//         title: Text("Fruit Data"),
+//       ),
+//       body: Column(
+//         // mainAxisAlignment: MainAxisAlignment.start,
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           FutureBuilder(
+//               future: storage.downloadURL(image),
+//               builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+//                 if (snapshot.connectionState == ConnectionState.done &&
+//                     snapshot.hasData) {
+//                   return Container(
+//                     margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+//                     width: MediaQuery.of(context).size.width,
+//                     height: MediaQuery.of(context).size.height * 0.40,
+//                     child: Image.network(
+//                       snapshot.data!,
+//                       fit: BoxFit.cover,
+//                     ),
+//                   );
+//                 }
+//                 if (snapshot.connectionState == ConnectionState.waiting ||
+//                     !snapshot.hasData) {
+//                   return CircularProgressIndicator();
+//                 }
+//                 return Container();
+//               }),
+//           SizedBox(
+//             height: 20,
+//           ),
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: Container(
+//               child: Text(
+//                 title,
+//                 style: TextStyle(
+//                     fontSize: 25,
+//                     fontWeight: FontWeight.bold,
+//                     color: Colors.deepPurple),
+//               ),
+//             ),
+//           ),
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: Container(
+//               child: Text(
+//                 description,
+//                 style: TextStyle(
+//                   fontSize: 15,
+//                   fontWeight: FontWeight.w500,
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+class FruitData extends StatelessWidget {
+  final String title, image, description;
+
+  FruitData({
+    Key? key,
+    required this.title,
+    required this.image,
+    required this.description,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("hello"),
+        centerTitle: true,
+        title: Text("Fruit Data"),
       ),
       body: Column(
         // mainAxisAlignment: MainAxisAlignment.start,
